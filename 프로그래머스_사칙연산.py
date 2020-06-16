@@ -5,20 +5,24 @@ arr = ["1", "-", "3", "+", "5", "-", "8"]
 # 계산을 여러번 할 때에는 DP를 이용해보자
 # 계산이 총 n몇번 일어났는지를 파악하면 DP를 이용해 설계하기에 편하다 플로이드 워셜과 비슷한 방식으로 구성한다.
 
-maxcalc = [[-1000000]*(len(arr)//2 +1) for i in range(len(arr)//2 +1)]
-mincalc = [[1000000]*(len(arr)//2 +1) for i in range(len(arr)//2 +1)]
-n = len(maxcalc)
+n = len(arr)//2 + 1 
 
-for i in range(len(arr)):
-	if i % 2 == 0:
-		j = i//2
-		maxcalc[i//2][i//2] = int(arr[i])
-		mincalc[i//2][i//2] = int(arr[i])
+max_arr = [[-1000000000]*n for i in range(n)]
+min_arr = [[1000000000]*n for i in range(n)]
 
-for i in maxcalc:
-	print(i)
+for i in range(n):
+	max_arr[i][i] = int(arr[i*2])
+	min_arr[i][i] = int(arr[i*2])
 
-for c in range(1,n):
+for c in range(n):
 	for x in range(n-c):
-		y = c+x
-		
+		y = x+c
+		for k in range(y):
+			if arr[k*2+1] == '+':
+				max_arr[x][y] = max(max_arr[x][k]+max_arr[k+1][y], max_arr[x][y])
+				min_arr[x][y] = min(min_arr[x][k]+min_arr[k+1][y], min_arr[x][y])
+			else:
+				max_arr[x][y] = max(max_arr[x][k]-min_arr[k+1][y], max_arr[x][y])
+				min_arr[x][y] = min(min_arr[x][k]-max_arr[k+1][y], min_arr[x][y])
+
+print(max_arr[0][n-1])
