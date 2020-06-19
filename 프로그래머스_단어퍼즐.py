@@ -7,19 +7,20 @@ n = len(t)
 dp = [1e9]*(n+1)
 dp[0] = 0
 for i in range(n):
-  for k in range(1,6):
-    if i+k <= n and t[i:i+k] in strs:
-      dp[i+k] = min(dp[i]+1,dp[i+k] )
+  chk = t[i]
+  for st in strs:
+    m = len(st)
+    if chk == st[-1]:
+      if st == t[i-m+1:i+1]:
+        dp[i+1] = min(dp[i-m+1] + 1, dp[i+1])
+
 print(dp)
 
-
-# def solution(strs, t):
-#     dp = {}
-#     for i in range(len(t)):
-#         dp[i] = float('inf')
-
-#     for i in range(len(t)-1, -1, -1):
-#         for k in range(1,6):
-#             if t[i:i+k] in strs:
-#                 dp[i] = min(dp.get(i), dp.get(i+k, 0)+1)
-#     return dp.get(0) if dp.get(0) != float('inf') else -1
+# n = len(t)
+# dp = [1e9]*(n+1)
+# dp[0] = 0
+# for i in range(n):
+#   for k in range(1,6)
+#     if i+k <= n and t[i:i+k] in strs:
+#       dp[i+k] = min(dp[i]+1,dp[i+k])
+# print(dp)
