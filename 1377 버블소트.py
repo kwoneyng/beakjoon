@@ -12,4 +12,3 @@ arr = [int(input()) for i in range(n)]
 #   if chage == 0:
 #     print(i+1)
 #     break
-
