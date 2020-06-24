@@ -55,29 +55,6 @@ bst.preorder(bst.root)
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 # class Node:
 #   def __init__(self,key):
 #     self.key = key
