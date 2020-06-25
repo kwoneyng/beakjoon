@@ -32,12 +32,22 @@ for i in vis:
 for i in range(1,m+1):
   if shark.get(i):
     x,y,p = shark[i]
+    bd[x][y] = 0
+    back = 0
     for j in di[i][p]:
       a,b = near[j]
       xi,yi = x+a,y+b
       if 0<=xi<n and 0<=yi<n:
         if vis[xi][yi] == 0:
-          vis[xi][yi] = [i,k]
+          if bd[xi][yi] == 0:
+            bd[xi][yi] = i
+            vis[xi][yi] = [i,k]
           break
-        else:
-          
+        elif vis[xi][yi][0] == i:
+          back = [xi,yi]
+    elif back != 0:
+      x,y = back
+      bd[x][y] = i
+      vis[x][y] = [i,k]
+
+
