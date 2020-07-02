@@ -31,3 +31,27 @@ for t in range(int(input())):
         if vis[i+1] == 0:
             cycle(adj_list,n,i+1)
     print(n - len(cyles))
+
+
+
+# 다른풀이
+# import sys
+# input = sys.stdin.readline
+
+# for T in range(int(input())):
+#     n = int(input())
+#     next = [0]+[*map(int,input().split())]
+#     indegree = [0]*(n+1)
+#     for i in next:
+#         indegree[i] += 1
+
+#     q = [i for i in range(1,n+1) if indegree[i] == 0]
+#     ans = 0
+    
+#     while q:
+#         cur = q.pop()
+#         ans += 1
+#         indegree[next[cur]] -= 1
+#         if indegree[next[cur]] == 0:
+#             q.append(next[cur])
+#     print(ans)

@@ -12,3 +12,13 @@ arr = [int(input()) for i in range(n)]
 #   if chage == 0:
 #     print(i+1)
 #     break
+
+earr = list(enumerate(arr))
+earr.sort(key = lambda x: x[1])
+# print(earr)
+rs = 0
+for i in range(n):
+    if earr[i][0] > i:
+        rs = max(rs, earr[i][0]-i)
+
+print(rs+1)
