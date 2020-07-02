@@ -1,33 +1,27 @@
-n, m = map(int,input().split())
+n,m = map(int,input().split())
+sht = list(map(int,input().split()))
+lng = list(map(int,input().split()))
 
-man = list(map(int,input().split()))
-wman = list(map(int,input().split()))
+if n > m:
+  n,m = m,n
+  sht, lng = lng, sht
 
-if len(wman)>len(man):
-  pick = 0
-else:
-  pick = 1
+sht.sort()
+lng.sort()
 
-people = []
+score = [[0]*n for i in range(m)]
+for x in range(m):
+  for y in range(n):
+    score[x][y] = abs(lng[x]-sht[y])
 
-for i in man:
-  people.append([i,0])
+dp = [[0]*n for i in range(m)]
+for x in range(m):
+  dp[x][0] = score[x][0]
 
-for i in wman:
-  people.append([i,1])
+for i in score:
+  print(i)
 
-people.sort()
-rs = 0
-stack = []
-queue = []
-for i in range(len(people)):
-  if people[i][1] == pick:
-    queue.append(people[i])
-  else: # 선택 받을 때
-    stack.append(people[i])
-  
-  if queue:
-    if stack:
-      rs += abs(queue.pop(0)[0] - stack.pop()[0])
+for y in range(1,n):
+  for x in range(m):
+    dp[x][y] = dp
 
-print(rs)
