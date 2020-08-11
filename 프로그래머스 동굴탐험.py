@@ -1,3 +1,4 @@
+from collections import deque
 def solution(n, path, order):
     answer = False
     vis = [0]*n
@@ -11,9 +12,9 @@ def solution(n, path, order):
     for a,b in order:
         ord_ls[b] = a
         rel_ls[a] = b
-    q = [0]
+    q = deque([0])
     while q:
-        node = q.pop(0)
+        node = q.popleft()
         if vis[ord_ls[node]]:
             vis[node] = 1
             if len(nxt_ls[node]) > 1 or node == 0:
