@@ -37,20 +37,7 @@ function solution(n, path, order) {
                         vis[nxt] = -1
                     }
                 }
-            } else {
-                if (vis[nxt] === 0 || nxt === 0){
-                    q.push(nxt)
-                    vis[nxt] = 1
-                    for (var k=0; k < unord_arr[nxt].length; k++){
-                        var unord = unord_arr[nxt][k]
-                        if (vis[unord] === -1){
-                            q.push(unord)
-                            vis[unord] = 1
-                        }
-                    }
-                }
-            }
-        }
+            } 
     }
     var rs = 0
     vis.forEach(item=>{
