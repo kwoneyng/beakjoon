@@ -1,55 +1,42 @@
 function solution(n, path, order) {
-    var nxt_arr = []
-    var ord_arr = []
-    var unord_arr = []
-    for (var i=0;i<n; i++){
-        nxt_arr.push([])
-        ord_arr.push([])
-        unord_arr.push([])
-    }
-    path.forEach(item=>{
-        nxt_arr[item[0]].push(item[1])
-        nxt_arr[item[1]].push(item[0])
-    })
-    order.forEach(item=>{
-        ord_arr[item[1]].push(item[0])
-        unord_arr[item[0]].push(item[1])
-    })
-    var q = [0]
-    var vis = []
-    for (var i=0; i<n; i++){
-        vis.push(0)
-    }
+    let nxtArr = Array.from({length:n}, ()=>[])
+    let ordArr = Array.from({length:n}, ()=>0)
+    let relArr = Array.from({length:n}, ()=>0)
+    let vis = Array.from({length:n}, ()=>0)
     vis[0] = 1
-    while (q.length > 0){
-        var node = q.shift()
-        for (var i=0; i<nxt_arr[node].length; i++){
-            var nxt = nxt_arr[node][i]
-            if (ord_arr[nxt].length > 0){
-                for (var j=0; j<ord_arr[nxt];j++){
-                    var ord = ord_arr[nxt][j]
-                    if (vis[ord] === 1){
-                        if (vis[nxt] === 0){
-                            q.push(nxt)
-                            vis[nxt] = 1
-                        }
-                    } else {
-                        vis[nxt] = -1
+    path.forEach(([a,b])=>{
+        nxtArr[a].push(b)
+        nxtArr[b].push(a)
+    })
+    order.forEach(([a,b])=>{
+        ordArr[b] = a
+        relArr[a] = b        
+    })
+    let q = [0]
+    while (q.length !== 0){
+        let node = q.shift()
+        if (vis[ordArr[node]]){
+            vis[node] = 1
+            if (nxtArr[node].length > 1 || node === 0){
+                for (const nxt of nxtArr[node]){
+                    if (vis[nxt] === 0){
+                        q.push(nxt)
                     }
                 }
-            } 
-    }
-    var rs = 0
-    vis.forEach(item=>{
-        if (item === 0){
-            rs += 1
+            }
+            if (relArr[node] !== 0 && vis[relArr[node]] === -1){
+                q.push(relArr[node])
+            }
+        } else {
+            vis[node] = -1
         }
-    })   
-    if (rs>0){
-        return false
-    } else{
-        return true
     }
+    for (const i of vis){
+        if(i <= 0){
+            return false
+        }
+    }
+    return true;
 }
 
 var n = 9
