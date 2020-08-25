@@ -10,9 +10,12 @@ def solution(n, results):
             for k in range(n):
                 if total[x][k] != 0 and total[x][k] == total[k][y]:
                     total[x][y] = total[x][k]
-
+    answer = 0
     for i in total:
         print(i)
+        if i.count(0) == 1:
+            answer += 1
+    return answer
 
-n, results = 5,	[[4, 3], [4, 2], [3, 2], [1, 2], [2, 5]]
-solution(n,results)
+n, results = 8, [[1, 2], [2, 3], [3, 4], [4,5], [5, 6], [6, 7], [7, 8]] 
+print(solution(n,results))
