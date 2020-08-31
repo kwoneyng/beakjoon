@@ -1,5 +1,3 @@
-from collections import deque
-
 class Node:
     def __init__(self, char):
         self.char = char
@@ -12,16 +10,18 @@ class Trie:
         self.rht = {}
 
     def insert(self, string, length):
-        q = deque(list(string))
-        rq = deque(reversed(list(string)))
+        rstring = string[::-1]
         if not self.ht.get(length):
             self.ht[length] = Node(None)
             self.rht[length] = Node(None)
         head = self.ht[length]
         rhead = self.rht[length]
-        while q:
-            c = q.popleft()
-            rc = rq.popleft()
+        head.count += 1
+        rhead.count += 1
+        for i in range(length):
+            c = string[i]
+            rc = rstring[i]
+
             if head.child.get(c):
                 head.child[c].count += 1 # Node
             else: 
@@ -38,15 +38,18 @@ class Trie:
             head = self.ht[length]
         else:
             return 0
-        if query[0] == '?':
-            query = query[::-1]
-            head = self.rht[length]
-        query = query.replace('?','')
-        for i in query:
-            if head.child.get(i):
-                head = head.child[i]
-            else:
-                return 0
+        if not '?'*length == query:
+            if query[0] == '?':
+                query = query[::-1]
+                head = self.rht[length]
+            query = query.replace('?','')
+            for i in query:
+                if head.child.get(i):
+                    head = head.child[i]
+                else:
+                    return 0
+        else:
+            return head.count-1
         return head.count
             
 
@@ -62,6 +65,6 @@ def solution(words, queries):
     return answer
 
                 
-words, queries = ["frodo", "front", "frost", "frozen", "frame", "kakao"], ["fro??", "????o", "fr???", "fro???", "pro?", "prode"]
+words, queries = ["frodo", "front", "frost", "frozen", "frame", "kakao"], ["fro???", "?????", "prode"]
 print('answer is')
 print(solution(words,queries))
