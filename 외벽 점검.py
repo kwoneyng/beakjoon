@@ -10,7 +10,6 @@ def solution(n, weak, dist):
     for t in range(1,len(dist)+1):
         person = []
         perm(dist[:t],[],person)
-        # print(person)
         for per in person:
             for i in range(len(weak)):
                 people = per[:]
@@ -22,3 +21,6 @@ def solution(n, weak, dist):
                 if not temp:
                     return t
     return -1
+
+n,w,d =	200, [0, 10, 50, 80, 120, 160], [1, 10, 5, 40, 30]
+print(solution(n,w,d))
